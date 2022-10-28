@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class LeetCode657 {
+    /*
+     * @param strs: a list of strings
+     * @return: encodes a list of strings to a single string.
+     */
+	//I used the same concept as we use in String to end it using " or \" or \\
+    public String encode(List<String> strs) {
+        // write your code here
+        StringBuilder eStr= new StringBuilder();
+        for(String str: strs){
+            for(int i=0; i<str.length(); i++){
+                if(str.charAt(i)==':' || str.charAt(i)=='#'){
+                	//':' is encoded as '#:' and '#' is encoded as '##'
+                    eStr.append('#');
+                }
+                eStr.append(str.charAt(i));
+            }
+            //':' is used as delimiter e.g. ["Yasir", "Mehmood"] will be encoded as "Yasir:Mehmood"
+            eStr.append(':');
+        }
+        return eStr.toString();
+    }
+
+    /*
+     * @param str: A string
+     * @return: dcodes a single string to a list of strings
+     */
+    public List<String> decode(String str) {
+        StringBuilder dStr= new StringBuilder();
+        List<String> dStrs= new ArrayList<>();
+        for(int i=0; i<str.length(); i++){
+            if(str.charAt(i)==':'){
+                dStrs.add(dStr.toString());
+                dStr= new StringBuilder();
+            } else if(str.charAt(i)=='#') {
+            	i++;
+                dStr.append(str.charAt(i));
+            }
+            else 
+            	dStr.append(str.charAt(i));
+        }
+        return dStrs;
+    }
+}
